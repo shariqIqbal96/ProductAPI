@@ -10,8 +10,10 @@ public interface ProductService {
     public List<Product> getAllProducts();
     public Product getSingleProduct(long id) throws ProductNotFoundException;
     public Product createProduct(Product product);
-    public Product updateProduct(long id, Product product);
+    public Product updateProduct(Product product, long id);
     public Product deleteProduct(long id);
     public String[] getAllCategories();
     public List<Product> getProductsByCategory(String category);
+    public Category createCategory(Category category);
+
 }

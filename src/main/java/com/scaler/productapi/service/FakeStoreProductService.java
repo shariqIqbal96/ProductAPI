@@ -1,6 +1,5 @@
 package com.scaler.productapi.service;
 
-import com.scaler.productapi.dto.FakeStoreCategoryDto;
 import com.scaler.productapi.dto.FakeStoreProductDto;
 import com.scaler.productapi.exceptions.ProductNotFoundException;
 import com.scaler.productapi.model.Category;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     private final RestTemplate restTemplate;
 
@@ -69,7 +68,7 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product updateProduct(long id, Product product) {
+    public Product updateProduct(Product product, long id) {
         FakeStoreProductDto fsProductRequest = getFakeStoreProductDto(product);
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -113,7 +112,7 @@ public class FakeStoreProductService implements ProductService {
                 "https://fakestoreapi.com/products/categories", String[].class
         );
 
-        return  response;
+        return response;
     }
 
     @Override
@@ -127,5 +126,10 @@ public class FakeStoreProductService implements ProductService {
             products.add(fsProduct.toProduct());
         }
         return products;
+    }
+
+    @Override
+    public Category createCategory(Category category) {
+        return null;
     }
 }

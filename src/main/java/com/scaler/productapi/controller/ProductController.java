@@ -5,6 +5,7 @@ import com.scaler.productapi.exceptions.ProductNotFoundException;
 import com.scaler.productapi.model.Category;
 import com.scaler.productapi.model.Product;
 import com.scaler.productapi.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("dbImplementationProductService") ProductService productService) {
         this.productService = productService;
     }
 
@@ -36,8 +37,8 @@ public class ProductController {
     }
 
     @PutMapping("/products/{id}")
-    public Product updateProduct(@PathVariable("id") long productId, @RequestBody Product product) {
-        return productService.updateProduct(productId, product);
+    public Product updateProduct(@RequestBody Product product, @PathVariable("id") long productId) {
+        return productService.updateProduct(product, productId);
     }
 
     @DeleteMapping("/products/{id}")
@@ -54,6 +55,16 @@ public class ProductController {
     public List<Product> getProductsByCategory(@PathVariable("category") String category) {
         return productService.getProductsByCategory(category);
     }
+
+    @PostMapping("/categories")
+    public Category addCategory(@RequestBody Category category) {
+        return productService.createCategory(category);
+    }
+
+//    @GetMapping("/categories")
+//    public String[] getAllCategories() {
+//        return productService.getAllCategories();
+//    }
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorDto> handleProductNotFoundException(Exception exception) {
