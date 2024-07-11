@@ -4,6 +4,7 @@ import com.scaler.productapi.dto.FakeStoreProductDto;
 import com.scaler.productapi.exceptions.ProductNotFoundException;
 import com.scaler.productapi.model.Category;
 import com.scaler.productapi.model.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -21,15 +22,16 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-         FakeStoreProductDto[] response = restTemplate.getForObject(
-                "https://fakestoreapi.com/products", FakeStoreProductDto[].class
-        );
-         for (FakeStoreProductDto fsProduct : response) {
-             products.add(fsProduct.toProduct());
-         }
-        return products;
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortField, String sortDirection) {
+//        List<Product> products = new ArrayList<>();
+//         FakeStoreProductDto[] response = restTemplate.getForObject(
+//                "https://fakestoreapi.com/products", FakeStoreProductDto[].class
+//        );
+//         for (FakeStoreProductDto fsProduct : response) {
+//             products.add(fsProduct.toProduct());
+//         }
+//        return products;
+        return null;
     }
 
     @Override

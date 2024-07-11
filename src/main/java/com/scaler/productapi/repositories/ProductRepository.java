@@ -3,6 +3,8 @@ package com.scaler.productapi.repositories;
 import com.scaler.productapi.model.Category;
 import com.scaler.productapi.model.Product;
 import com.scaler.productapi.repositories.projections.ProductProjection;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,9 +20,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //Find list of products by its category
     List<Product> findByCategory(Category category);
     //Find the product by its id
-    Optional<Product> findById(long id);
-    @Override
-    List<Product> findAll();
+    Optional<Product> findById(Long id);
+
+    //List<Product> findAll();
+    Page<Product> findAll(Pageable pageable);
 
     @Override
     void deleteById(Long id);

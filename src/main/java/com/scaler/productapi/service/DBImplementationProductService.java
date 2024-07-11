@@ -5,6 +5,10 @@ import com.scaler.productapi.model.Category;
 import com.scaler.productapi.model.Product;
 import com.scaler.productapi.repositories.CategoryRepository;
 import com.scaler.productapi.repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +26,22 @@ public class DBImplementationProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortField, String sortDirection) {
+        Sort sort;
+        Pageable pageable;
+        if(sortDirection.compareToIgnoreCase("desc") == 0){
+            sort = Sort.by(Sort.Direction.DESC, sortField);
+            pageable = PageRequest.of(pageNumber, pageSize, sort);
+        }
+        else if(sortDirection.compareToIgnoreCase("asc") == 0) {
+            sort = Sort.by(Sort.Direction.ASC, sortField);
+            pageable = PageRequest.of(pageNumber, pageSize, sort);
+        }
+        else {
+            pageable = PageRequest.of(pageNumber, pageSize);
+        }
+        return productRepository.findAll(pageable);
+        //return productRepository.findAll();
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.scaler.productapi.model.Category;
 import com.scaler.productapi.model.Product;
 import com.scaler.productapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,8 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<Product> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize, @RequestParam("sortBy") String fieldName, @RequestParam("sortOrder") String sortOrder) {
+        return productService.getAllProducts(pageNumber, pageSize, fieldName, sortOrder);
     }
 
     @PutMapping("/products/{id}")
