@@ -26,7 +26,7 @@ public class DBImplementationProductService implements ProductService {
     }
 
     @Override
-    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortField, String sortDirection) {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize, String sortField, @org.jetbrains.annotations.NotNull String sortDirection) {
         Sort sort;
         Pageable pageable;
         if(sortDirection.compareToIgnoreCase("desc") == 0){
